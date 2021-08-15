@@ -27,7 +27,7 @@ func Int31() int32 {
 
 const uintSize = 32 << (^uint(0) >> 32 & 1) // 32 or 64
 
-// Int returns a non-negative pseudo-random int from the default Source.
+// Int returns a non-negative pseudo-random int.
 func Int() int {
 	if uintSize == 32 {
 		return int(Int31())
@@ -41,7 +41,7 @@ func Intn(n int) int {
 	if uintSize == 32 {
 		return int(Int31n(int32(n)))
 	}
-	if n <= 1<<31 {
+	if n <= 1<<31-1 {
 		return int(Int31n(int32(n)))
 	}
 	return int(Int63n(int64(n)))
