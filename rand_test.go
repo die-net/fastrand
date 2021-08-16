@@ -83,9 +83,9 @@ func TestUint(t *testing.T) {
 				set |= v
 				unset &= v
 			}
-			assert.Greater(t, max, test.max-(test.max>>2), "no output near expected max")
-			assert.LessOrEqual(t, max, test.max, "shouldn't exceed test.max")
-			assert.Less(t, min, test.max>>2, "no output near expected min")
+			assert.GreaterOrEqual(t, max, test.max-(test.max>>2), "no output near expected max")
+			assert.Less(t, max, test.max, "should be less than test.max")
+			assert.LessOrEqual(t, min, test.max>>2, "no output near expected min")
 			assert.Equal(t, test.max, set, "all bits should've been set at least once")
 			assert.Empty(t, unset, "all bit should've been unset at least once")
 		})
@@ -123,9 +123,9 @@ func TestInt(t *testing.T) {
 				set |= v
 				unset &= v
 			}
-			assert.Greater(t, max, test.max-(test.max>>2), "no output near expected max")
-			assert.LessOrEqual(t, max, test.max, "shouldn't exceed test.max")
-			assert.Less(t, min, test.max>>2, "no output near expected min")
+			assert.GreaterOrEqual(t, max, test.max-(test.max>>2), "no output near expected max")
+			assert.Less(t, max, test.max, "shouldn't be less than test.max")
+			assert.LessOrEqual(t, min, test.max>>2, "no output near expected min")
 			assert.GreaterOrEqual(t, int64(0), min, "shouldn't be less than 0")
 			assert.Equal(t, test.max, set, "all bits should've been set at least once")
 			assert.Empty(t, unset, "all bit should've been unset at least once")
@@ -186,20 +186,25 @@ func TestRace(t *testing.T) {
 		go func() {
 			buf := make([]byte, 19)
 			for j := 0; j < 10; j++ {
-				_ = ExpFloat64()
-				_ = Float32()
-				_ = Float64()
-				_ = Intn(Int())
-				_ = Int31n(Int31())
-				_ = Int63n(Int63())
-				_ = NormFloat64()
-				_ = Uint32()
 				_ = Uint64()
-				_ = Perm(10)
+				_ = Uint32()
+
+				_ = Intn(Int())
+				_ = Int63n(Int63())
+				_ = Int31n(Int31())
+
 				_, _ = Read(buf)
+				_ = Perm(10)
 				Shuffle(len(buf), func(i, j int) {
 					buf[i], buf[j] = buf[j], buf[i]
 				})
+
+				_ = Float64()
+				_ = Float32()
+				_ = NormFloat64()
+				_ = ExpFloat64()
+
+				_ = NewZipf(2.0, 1.0, 128).Uint64()
 			}
 			wg.Done()
 		}()

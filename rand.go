@@ -49,3 +49,14 @@ func NormFloat64() float64 { return globalRand.NormFloat64() }
 //  sample = ExpFloat64() / desiredRateParameter
 //
 func ExpFloat64() float64 { return globalRand.ExpFloat64() }
+
+// NewZipf returns a Zipf variate generator.
+// The generator generates values k ∈ [0, imax]
+// such that P(k) is proportional to (v + k) ** (-s).
+// Requirements: s > 1 and v >= 1.
+//
+// Call the Uint64 method on the returned object to get a value drawn from
+// the Zipf distribution.
+func NewZipf(s, v float64, imax uint64) *rand.Zipf {
+	return rand.NewZipf(globalRand, s, v, imax)
+}
