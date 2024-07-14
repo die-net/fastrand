@@ -1,6 +1,10 @@
 FastRand [![Build Status](https://github.com/die-net/fastrand/actions/workflows/go-test.yml/badge.svg)](https://github.com/die-net/fastrand/actions/workflows/go-test.yml) [![Coverage Status](https://coveralls.io/repos/github/die-net/fastrand/badge.svg?branch=main)](https://coveralls.io/github/die-net/fastrand?branch=main) [![Go Report Card](https://goreportcard.com/badge/github.com/die-net/fastrand)](https://goreportcard.com/report/github.com/die-net/fastrand)
 ========
 
+## This project is now archived. It has been obsoleted by Go 1.22's `math/rand/v2`, which uses per-thread random generator results.
+
+---
+
 FastRand exposes the Go internal `runtime.fastrand()`, a fast thread-local pseudorandom
 number generator (PRNG).  On x86-64, this is based on hardware-accelerated
 AES seeded by `/dev/urandom`.
